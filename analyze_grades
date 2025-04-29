@@ -1,0 +1,26 @@
+import csv
+
+def analyze_grades(csv_file, threshold):
+    students = {}
+
+    with open(csv_file, mode='r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            name = row['name']
+            grade = float(row['grade'])
+
+            if name in students:
+                students[name].append(grade)
+            else:
+                students[name] = [grade]
+# Check average grade
+    print(f"Students with average grade above {threshold}:")
+    for name, grades in students.items():
+        avg_grade = sum(grades) / len(grades)
+        if avg_grade > threshold:
+            print(f"- {name} (Average: {avg_grade:.2f})")
+
+# Example usage:
+csv_file = 'students.csv'  # path to your CSV file
+threshold = 75  # specify your threshold here
+analyze_grades(csv_file, threshold)
